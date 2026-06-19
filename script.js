@@ -81,7 +81,6 @@ const revealObserver = new IntersectionObserver(
   },
   { threshold: 0.12 }
 );
-
 revealEls.forEach((el, i) => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(24px)';
