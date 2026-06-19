@@ -648,11 +648,31 @@ img { display: block; max-width: 100%; }
   color: var(--text-muted);
 }
 
-/* ---------- RESPONSIVE ---------- */
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* ---- Tablet / large mobile (≤900px): overlay sections become
+   a full-width image banner ABOVE the text, instead of a
+   background sitting behind the text. This is what fixes the
+   "image too small / not covering" issue on phones — the image
+   now occupies a fixed-height strip of its own and always fills
+   it edge-to-edge via object-fit: cover. ---- */
 @media (max-width: 900px) {
   .hero__inner {
     gap: 40px;
     padding: 40px 0 56px;
+  }
+
+  .overlay-section {
+    aspect-ratio: auto;
+    min-height: 0;
+    display: block;
+    padding-bottom: 40px;
+  }
+
+  .overlay-section > .container {
+    padding-top: 24px;
   }
 
   .overlay-section--drivers .overlay-section__content,
@@ -676,26 +696,15 @@ img { display: block; max-width: 100%; }
     justify-content: flex-start;
   }
 
-  .overlay-section {
-    aspect-ratio: auto;
-    min-height: 280px;
-  }
-
-  /* Feature graphics become a subtle, faded corner accent on mobile/tablet —
-     matching the How It Works treatment — instead of a full banner. This also
-     keeps any baked-in text in the source images from competing with the
-     real heading/feature text. */
+  /* Image banner: full width, fixed height, always covers */
   .hero__bg,
-  .overlay-section__bg-img,
-  .hero__bg-img {
-    pointer-events: none;
-  }
-
-  .hero__bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
+  .overlay-section__bg {
+    position: static;
+    inset: auto;
+    width: 100%;
+    height: 220px;
     overflow: hidden;
+    margin-bottom: 16px;
   }
 
   .hero__content {
@@ -705,18 +714,17 @@ img { display: block; max-width: 100%; }
 
   .hero__bg-img,
   .overlay-section__bg-img {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 42%;
+    position: static;
+    width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center center;
-    opacity: 0.28;
-    -webkit-mask-image: linear-gradient(to left, black 0%, black 20%, transparent 95%);
-    mask-image: linear-gradient(to left, black 0%, black 20%, transparent 95%);
+    opacity: 1;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
+  /* No longer needed once the image isn't behind the text */
   .overlay-section__gradient,
   .hero__overlay {
     display: none;
@@ -726,6 +734,7 @@ img { display: block; max-width: 100%; }
   .footer__inner { grid-template-columns: 1fr 1fr; }
 }
 
+/* ---- Nav burger breakpoint ---- */
 @media (max-width: 880px) {
   .nav__links, .nav__cta { display: none; }
   .nav__burger { display: flex; }
@@ -743,6 +752,7 @@ img { display: block; max-width: 100%; }
   }
 }
 
+/* ---- Phone breakpoint ---- */
 @media (max-width: 600px) {
   .hero__inner {
     flex-direction: column;
@@ -761,6 +771,11 @@ img { display: block; max-width: 100%; }
   .hero__image-wrap img {
     max-width: 360px;
     margin: 0 auto;
+  }
+
+  .hero__bg,
+  .overlay-section__bg {
+    height: 180px;
   }
 
   .feature-row { flex-direction: column; gap: 22px; }
