@@ -681,27 +681,45 @@ img { display: block; max-width: 100%; }
     min-height: 280px;
   }
 
+  /* Feature graphics become a subtle, faded corner accent on mobile/tablet —
+     matching the How It Works treatment — instead of a full banner. This also
+     keeps any baked-in text in the source images from competing with the
+     real heading/feature text. */
+  .hero__bg,
+  .overlay-section__bg-img,
+  .hero__bg-img {
+    pointer-events: none;
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero__bg-img,
   .overlay-section__bg-img {
-    object-fit: contain;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 42%;
+    height: 100%;
+    object-fit: cover;
     object-position: center center;
+    opacity: 0.28;
+    -webkit-mask-image: linear-gradient(to left, black 0%, black 20%, transparent 95%);
+    mask-image: linear-gradient(to left, black 0%, black 20%, transparent 95%);
   }
 
-  .overlay-section--passengers .overlay-section__gradient {
-    background: linear-gradient(
-      90deg,
-      rgba(13,31,60,0.98) 0%,
-      rgba(13,31,60,0.96) 60%,
-      rgba(13,31,60,0.93) 100%
-    );
-  }
-
-  .overlay-section--drivers .overlay-section__gradient {
-    background: linear-gradient(
-      270deg,
-      rgba(10,22,40,0.98) 0%,
-      rgba(10,22,40,0.96) 60%,
-      rgba(10,22,40,0.93) 100%
-    );
+  .overlay-section__gradient,
+  .hero__overlay {
+    display: none;
   }
 
   .download__inner { flex-direction: column; }
@@ -746,8 +764,6 @@ img { display: block; max-width: 100%; }
   }
 
   .feature-row { flex-direction: column; gap: 22px; }
-
-  .overlay-section__bg-img { opacity: 0.14; }
 
   .footer__inner { grid-template-columns: 1fr; gap: 28px; }
   .footer__bottom-inner { justify-content: center; }
